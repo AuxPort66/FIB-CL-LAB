@@ -94,7 +94,7 @@ int main(int argc, const char* argv[]) {
   }
 
   // print the parse tree (for debugging purposes)
-  // std::cout << tree->toStringTree(&parser) << std::endl;
+  //std::cout << tree->toStringTree(&parser) << std::endl;
 
   // create a walker that will traverse the tree and do several things,
   // like checking variable types or generating code.

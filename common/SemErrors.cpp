@@ -43,6 +43,7 @@ void SemErrors::print() {
 }
 
 bool SemErrors::less(const ErrorInfo & e1, const ErrorInfo & e2) {
+  if (e1.getLine() == e2.getLine()) return e1.getColumnInLine() < e2.getColumnInLine();
   return e1.getLine() < e2.getLine();
 }
 
@@ -124,8 +125,8 @@ void SemErrors::referenceableParameter(antlr4::ParserRuleContext *pCtx,
   ErrorList.push_back(error);
 }
 
-void SemErrors::incompatibleReturn(antlr4::ParserRuleContext *ctx) {
-  ErrorInfo error(ctx->getStart()->getLine(), ctx->getStart()->getCharPositionInLine(), "Return with incompatible type.");
+void SemErrors::incompatibleReturn(antlr4::tree::TerminalNode *node) {
+  ErrorInfo error(node->getSymbol()->getLine(), node->getSymbol()->getCharPositionInLine(), "Return with incompatible type.");
   ErrorList.push_back(error);
 }
 
@@ -154,4 +155,8 @@ void SemErrors::ErrorInfo::print() const {
 
 std::size_t SemErrors::ErrorInfo::getLine() const {
   return line;
+}
+
+std::size_t SemErrors::ErrorInfo::getColumnInLine() const {
+  return coln;
 }

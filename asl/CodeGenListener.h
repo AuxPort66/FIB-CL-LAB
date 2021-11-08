@@ -38,6 +38,7 @@
 #include "../common/code.h"
 
 #include <string>
+#include <map>
 
 // using namespace std;
 
@@ -70,6 +71,9 @@ public:
 
   void enterDeclarations(AslParser::DeclarationsContext *ctx);
   void exitDeclarations(AslParser::DeclarationsContext *ctx);
+  
+  void enterParameter_decl(AslParser::Parameter_declContext *ctx);
+  void exitParameter_decl(AslParser::Parameter_declContext *ctx);
 
   void enterVariable_decl(AslParser::Variable_declContext *ctx);
   void exitVariable_decl(AslParser::Variable_declContext *ctx);
@@ -85,6 +89,9 @@ public:
 
   void enterIfStmt(AslParser::IfStmtContext *ctx);
   void exitIfStmt(AslParser::IfStmtContext *ctx);
+  
+  void enterWhileStmt(AslParser::WhileStmtContext *ctx);
+  void exitWhileStmt(AslParser::WhileStmtContext *ctx);
 
   void enterProcCall(AslParser::ProcCallContext *ctx);
   void exitProcCall(AslParser::ProcCallContext *ctx);
@@ -97,18 +104,30 @@ public:
 
   void enterWriteString(AslParser::WriteStringContext *ctx);
   void exitWriteString(AslParser::WriteStringContext *ctx);
+  
+  void enterReturnExpr_(AslParser::ReturnExpr_Context *ctx);
+  void exitReturnExpr_(AslParser::ReturnExpr_Context *ctx);
 
   void enterLeft_expr(AslParser::Left_exprContext *ctx);
   void exitLeft_expr(AslParser::Left_exprContext *ctx);
 
+  void enterProcExpr(AslParser::ProcExprContext *ctx);
+  void exitProcExpr(AslParser::ProcExprContext *ctx);
+  
   void enterArithmetic(AslParser::ArithmeticContext *ctx);
   void exitArithmetic(AslParser::ArithmeticContext *ctx);
+  
+  void enterParenthesis(AslParser::ParenthesisContext *ctx);
+  void exitParenthesis(AslParser::ParenthesisContext *ctx);
 
   void enterRelational(AslParser::RelationalContext *ctx);
   void exitRelational(AslParser::RelationalContext *ctx);
 
   void enterValue(AslParser::ValueContext *ctx);
   void exitValue(AslParser::ValueContext *ctx);
+  
+  void enterProcedure(AslParser::ProcedureContext *ctx);
+  void exitProcedure(AslParser::ProcedureContext *ctx);
 
   void enterExprIdent(AslParser::ExprIdentContext *ctx);
   void exitExprIdent(AslParser::ExprIdentContext *ctx);
@@ -137,6 +156,8 @@ private:
   std::string       getAddrDecor   (antlr4::ParserRuleContext *ctx);
   std::string       getOffsetDecor (antlr4::ParserRuleContext *ctx);
   instructionList   getCodeDecor   (antlr4::ParserRuleContext *ctx);
+  
+  std::map <std::string, std::string> arrayLocs;
 
   // Setters for the necessary tree node attributes:
   //   Addr, Offset and Code
